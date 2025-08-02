@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Home" %} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="bg-success text-white rounded p-5 text-center">
+            <h1 class="display-4 mb-4">
+                <i class="fas fa-seedling me-3"></i>
+                {% trans "Welcome to Malawi Crop Advisory" %}
+            </h1>
+            <p class="lead mb-4">
+                {% trans "Get personalized farming advice based on your location, crops, and current weather conditions" %}
+            </p>
+            {% if not user.is_authenticated %}
+                <a href="{% url 'register' %}" class="btn btn-light btn-lg me-3">
+                    <i class="fas fa-user-plus"></i> {% trans "Join Now" %}
+                </a>
+                <a href="{% url 'crop_list' %}" class="btn btn-outline-light btn-lg">
+                    <i class="fas fa-leaf"></i> {% trans "Explore Crops" %}
+                </a>
+            {% else %}
+                <a href="{% url 'farmer_dashboard' %}" class="btn btn-light btn-lg me-3">
+                    <i class="fas fa-tachometer-alt"></i> {% trans "Go to Dashboard" %}
+                </a>
+                <a href="{% url 'get_advice' %}" class="btn btn-outline-light btn-lg">
+                    <i class="fas fa-lightbulb"></i> {% trans "Get Advice" %}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-5">
+    <div class="col-md-3 mb-3">
+        <div class="card bg-primary text-white h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-users fa-3x mb-3"></i>
+                <h3>{{ total_farmers }}</h3>
+                <p class="card-text">{% trans "Registered Farmers" %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card bg-success text-white h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-leaf fa-3x mb-3"></i>
+                <h3>{{ total_crops }}</h3>
+                <p class="card-text">{% trans "Available Crops" %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card bg-info text-white h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-map-marker-alt fa-3x mb-3"></i>
+                <h3>{{ total_regions }}</h3>
+                <p class="card-text">{% trans "Covered Regions" %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card bg-warning text-white h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-lightbulb fa-3x mb-3"></i>
+                <h3>{{ recent_advice }}</h3>
+                <p class="card-text">{% trans "Advice This Week" %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="row mb-5">
+    <div class="col-12">
+        <h2 class="text-center mb-5">{% trans "Our Features" %}</h2>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <i class="fas fa-brain fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">{% trans "AI-Powered Advice" %}</h5>
+                <p class="card-text">
+                    {% trans "Get intelligent farming recommendations based on your specific crops, location, and current weather conditions." %}
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <i class="fas fa-cloud-sun fa-3x text-info mb-3"></i>
+                <h5 class="card-title">{% trans "Weather Integration" %}</h5>
+                <p class="card-text">
+                    {% trans "Real-time weather data helps you make informed decisions about planting, irrigation, and harvesting." %}
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <i class="fas fa-globe fa-3x text-success mb-3"></i>
+                <h5 class="card-title">{% trans "Bilingual Support" %}</h5>
+                <p class="card-text">
+                    {% trans "Access farming advice in both English and Chichewa to better understand recommendations." %}
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <i class="fas fa-calendar-alt fa-3x text-warning mb-3"></i>
+                <h5 class="card-title">{% trans "Farming Calendar" %}</h5>
+                <p class="card-text">
+                    {% trans "Follow seasonal farming activities and never miss important planting or harvesting times." %}
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <i class="fas fa-chart-line fa-3x text-danger mb-3"></i>
+                <h5 class="card-title">{% trans "Market Prices" %}</h5>
+                <p class="card-text">
+                    {% trans "Stay updated with current market prices to make informed decisions about when to sell your crops." %}
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <i class="fas fa-mobile-alt fa-3x text-secondary mb-3"></i>
+                <h5 class="card-title">{% trans "Mobile Friendly" %}</h5>
+                <p class="card-text">
+                    {% trans "Access farming advice anytime, anywhere using your smartphone or tablet device." %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How It Works Section -->
+<div class="row mb-5">
+    <div class="col-12">
+        <h2 class="text-center mb-5">{% trans "How It Works" %}</h2>
+    </div>
+    
+    <div class="col-md-3 text-center mb-4">
+        <div class="step-icon bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+            <span class="h2 mb-0">1</span>
+        </div>
+        <h5>{% trans "Register" %}</h5>
+        <p>{% trans "Create your farmer profile with your location and crops" %}</p>
+    </div>
+    
+    <div class="col-md-3 text-center mb-4">
+        <div class="step-icon bg-success text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+            <span class="h2 mb-0">2</span>
+        </div>
+        <h5>{% trans "Select Crops" %}</h5>
+        <p>{% trans "Choose the crops you grow or plan to grow" %}</p>
+    </div>
+    
+    <div class="col-md-3 text-center mb-4">
+        <div class="step-icon bg-info text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+            <span class="h2 mb-0">3</span>
+        </div>
+        <h5>{% trans "Get Advice" %}</h5>
+        <p>{% trans "Receive personalized farming recommendations" %}</p>
+    </div>
+    
+    <div class="col-md-3 text-center mb-4">
+        <div class="step-icon bg-warning text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+            <span class="h2 mb-0">4</span>
+        </div>
+        <h5>{% trans "Improve Yields" %}</h5>
+        <p>{% trans "Follow advice to increase your crop productivity" %}</p>
+    </div>
+</div>
+
+<!-- Call to Action -->
+{% if not user.is_authenticated %}
+<div class="row">
+    <div class="col-12">
+        <div class="card bg-light">
+            <div class="card-body text-center py-5">
+                <h3>{% trans "Ready to Get Started?" %}</h3>
+                <p class="lead mb-4">
+                    {% trans "Join thousands of farmers who are already improving their yields with our advisory system" %}
+                </p>
+                <a href="{% url 'register' %}" class="btn btn-success btn-lg">
+                    <i class="fas fa-user-plus"></i> {% trans "Register Now" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

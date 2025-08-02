@@ -161,3 +161,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ]
 }
+
+# Login/Logout URLs
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'farmer_dashboard'
+LOGOUT_REDIRECT_URL = 'homepage'
